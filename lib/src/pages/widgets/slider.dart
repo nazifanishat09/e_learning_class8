@@ -12,8 +12,8 @@ class CustomSlider extends StatelessWidget {
       options: CarouselOptions(
         height: 200,
         autoPlay: true,
-        autoPlayInterval: Duration(seconds: 2),
-        autoPlayAnimationDuration: Duration(milliseconds: 800),
+        autoPlayInterval: Duration(seconds: 4),
+        autoPlayAnimationDuration: Duration(milliseconds: 900),
         enlargeCenterPage: true,
         viewportFraction: 1.0,
       ),
