@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:class_8/src/pages/widgets/customText.dart';
+import 'package:class_8/src/pages/widgets/searchbar.dart';
 import 'package:class_8/src/pages/widgets/slider.dart';
 import 'package:flutter/material.dart';
 
@@ -107,16 +108,11 @@ class _HomepageState extends State<Homepage> {
             ),
             SizedBox(height: 10),
             CustomSlider(i: i),
-TextField(
-  decoration: InputDecoration(
-    
-  ),
-),
-
-
+            Searchber(),
           ],
         ),
       ),
     );
   }
 }
+
