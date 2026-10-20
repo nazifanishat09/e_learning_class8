@@ -21,22 +21,35 @@ class _HomepageState extends State<Homepage> {
   ];
   int selected = 0;
   List<Map<String, dynamic>> data = [
-    {'svg': 'assets/grape.svg', 'name': 'Grape'},
-    {'svg': 'assets/guava.svg', 'name': 'Guava'},
-    {'svg': 'assets/apple.svg', 'name': 'Apple'},
-    {'svg': 'assets/orange.svg', 'name': 'Orange'},
-    {'svg': 'assets/pepe.svg', 'name': 'Pepe'},
-    {'svg': 'assets/pomegranate.svg', 'name': 'Pomegranate'},
-    {'svg': 'assets/watermelon.svg', 'name': 'Watermelon'},
+    {'svg': 'assets/svg/grape.svg', 'name': 'Grape'},
+    {'svg': 'assets/svg/guava.svg', 'name': 'Guava'},
+    {'svg': 'assets/svg/apple.svg', 'name': 'Apple'},
+    {'svg': 'assets/svg/orange.svg', 'name': 'Orange'},
+    {'svg': 'assets/svg/pepe.svg', 'name': 'Pepe'},
+    {'svg': 'assets/svg/pomegranate.svg', 'name': 'Pomegranate'},
+    {'svg': 'assets/svg/watermelon.svg', 'name': 'Watermelon'},
   ];
 
+  List<Map<String, dynamic>> imgData = [
+    {'name': 'Cherry', 'prise': 120, 'img': 'assets/image/cherry.png'},
+    {'name': 'Strawbarry', 'prise': 80, 'img': 'assets/image/strawbarry.png'},
+    {'name': 'Dragon', 'prise': 370, 'img': 'assets/image/dragon.png'},
+    {'name': 'Kiwi', 'prise': 400, 'img': 'assets/image/kiwi.png'},
+    {'name': 'Lemon', 'prise': 130, 'img': 'assets/image/lemon.png'},
+    {'name': 'Orange', 'prise': 200, 'img': 'assets/image/orange.png'},
+    {'name': 'Pineaapple', 'prise': 150, 'img': 'assets/image/pineapple.png'},
+    {'name': 'Watermelon', 'prise': 100, 'img': 'assets/image/watermelon.png'},
+  ];
+  List quantities = List.filled(8, 1);
+
+  List<bool> favorites = List.filled(8, false);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Category page - class 8")),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: SingleChildScrollView(
           child: Column(
             spacing: 20,
             children: [
@@ -186,6 +199,138 @@ class _HomepageState extends State<Homepage> {
                     );
                   },
                 ),
+              ),
+
+              Row(
+                children: [
+                  CustomTextWidgets(
+                    title: "Popular Products",
+                    fS: 23,
+                    fW: FontWeight.w700,
+                  ),
+                  SizedBox(width: 80),
+                  CustomTextWidgets(title: "See All", fC: Colors.grey),
+                  SizedBox(width: 7),
+                  Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey),
+                ],
+              ),
+
+              GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: 0.7,
+                ),
+                itemCount: imgData.length,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+
+                itemBuilder: (c, i) {
+                  final frut = imgData[i];
+
+                  return Stack(
+                    children: [
+                      SizedBox(
+                        width: 170,
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Image.asset(frut['img'], height: 150),
+
+                                CustomTextWidgets(
+                                  title: frut['name'],
+                                  fS: 16,
+                                  fW: FontWeight.w600,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    CustomTextWidgets(
+                                      title: "${frut['prise']} tk",
+                                      fS: 18,
+                                      fW: FontWeight.w600,
+                                    ),
+                                    SizedBox(width: 5),
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          quantities[i]++;
+                                        });
+                                      },
+                                      child: Container(
+                                        height: 25,
+                                        width: 25,
+                                        decoration: BoxDecoration(
+                                          color: mainC,
+                                          borderRadius: BorderRadius.circular(
+                                            30,
+                                          ),
+                                        ),
+                                        child: Icon(
+                                          Icons.add,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+
+                                    CustomTextWidgets(
+                                      title: '${quantities[i]}',
+                                      fS: 18,
+                                      fW: FontWeight.w600,
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          if (quantities[i] > 1) {
+                                            quantities[i]--;
+                                          }
+                                        });
+                                      },
+                                      child: Container(
+                                        height: 25,
+                                        width: 25,
+                                        decoration: BoxDecoration(
+                                          color: mainC,
+                                          borderRadius: BorderRadius.circular(
+                                            30,
+                                          ),
+                                        ),
+                                        child: Icon(
+                                          Icons.remove,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Positioned(
+                        top: 10,
+                        right: 10,
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              favorites[i] = !favorites[i];
+                            });
+                          },
+                          child: favorites[i]
+                              ? Icon(Icons.favorite, color: Colors.red)
+                              : Icon(Icons.favorite_border),
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
             ],
           ),
